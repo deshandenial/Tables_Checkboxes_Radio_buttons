@@ -35,35 +35,44 @@ public class Dynamically_Identify_Tables_Data
 		String xpath1="//div[@class='dataTables_wrapper']/table//tr[";
 		String xpath2="]/td[1]";
 		
-		// Find the //No.of Rows
+		
         
         	List<WebElement> rows=driver.findElements(By.xpath("//div[@class='dataTables_wrapper']/table/tbody/tr/td"));
         	System.out.println("No.Of Rows in a table:"+rows.size());
-        	//int rowcount=rows.size();
+        	
 		
-        //  Find the //No.of Columns
+       
 			List<WebElement> col=driver.findElements(By.xpath("//div[@class='dataTables_wrapper']/table/thead/tr/th"));
 		    System.out.println("No.Of Column in a table:"+col.size());
-		   // int colcount=col.size();  
+		   
 		    
 		    
-		  //  for(int i=colcount;i<=rowcount;i++)
-		    for(int i=1;i<=10;i++)
+		
+		    for(int i=1;i<=rows.size();i++)
 			{
 				String name = driver.findElement(By.xpath(xpath1+i+xpath2)).getText();
 				System.out.println(name);
-				
-				
-				for(int j=1;j<=5;j++)
+				if(name.contains("Fixter"))
 				{
-			
-					if(name.contains("Fixter"))
+					for(int j=1;j<=col.size();j++)
+					{
+					
+					String action=driver.findElement(By.xpath("//div[@class='dataTables_wrapper']/table//tr["+i+"]/td["+j+"]")).getText();
+					System.out.println(action);
+						if(action.contains("View"))
 						{
-							driver.findElement(By.xpath("//div[@class='dataTables_wrapper']/table//tr["+i+"]/td[5]/a["+j+"]")).click();
-							driver.findElement(By.xpath("//input[@id='cancel-button']")).click();
-							
+							driver.findElement(By.xpath("//div[@class='dataTables_wrapper']/table//tr["+i+"]/td["+j+"]/a")).click();
+						
 						}
+					}
+					break;
 				}
+				
+				
+				
+				
+			
+		  
 				
 				
 			}
